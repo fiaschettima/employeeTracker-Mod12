@@ -10,8 +10,8 @@ CREATE TABLE department (
   PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS department_role;
-CREATE TABLE department_role(
+DROP TABLE IF EXISTS roles;
+CREATE TABLE roles(
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(30) NOT NULL,
   salary INT,

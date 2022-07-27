@@ -1,41 +1,42 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
-const {getStarted, newDept, newRole, newEmployee, updateEmployee} = require('./Assets/JS/prompts')
-
+const {getStarted, newDept, newRole, newEmployee, updateEmployee} = require('./Assets/JS/prompts');
+const figlet = require('figlet');
 
 const sqlLink = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'password',
-    database: 'company_db'
+    database: 'movies_db'
 },
-console.log(`Connected to ${sqlLink} Database`)
+console.log('connected to movies_db')
 );
-// ------------------------------------Function gets a list of all department names---------------------------------------------
+// // ------------------------------------Function gets a list of all department names---------------------------------------------
 function getDepartments(){
 // return a list of all department names in [array, form]
+console.log('hit')
 };
-// ------------------------------------Function gets a list of all roles---------------------------------------------
+// // ------------------------------------Function gets a list of all roles---------------------------------------------
 function getRoles(){
 // return a list of all role names in [array, form]
 };
-// ------------------------------------Function gets a list of all managers---------------------------------------------
+// // ------------------------------------Function gets a list of all managers---------------------------------------------
 function getManagers(){
 // return a list of all manager names in [array, form]
 };
-// ------------------------------------Function gets a list of all employees---------------------------------------------
+// // ------------------------------------Function gets a list of all employees---------------------------------------------
 function getEmployees(){
 // return a list of all employee names in [array, form]
 };
-// ------------------------------------Function Adds department to  department table---------------------------------------------
+// // ------------------------------------Function Adds department to  department table---------------------------------------------
 function newDepartment(){
 
 };
-// ------------------------------------Function Adds role to department_role table---------------------------------------------
+// // ------------------------------------Function Adds role to department_role table---------------------------------------------
 function addRole(){
     inquirer.prompt(newRole).then((answers) => {
         console.log(answers);
-        sqlLink.query(`INSERT INTO department_role VALUES('${answewrs.name}', '${answers.salary}', '${answers.parentDept}'`,  (err, result) =>{
+        sqlLink.query(`INSERT INTO roles VALUES('${answewrs.name}', '${answers.salary}', '${answers.parentDept}'`,  (err, result) =>{
             if(err){
                 console.error(err);
             }
@@ -43,7 +44,7 @@ function addRole(){
            });
     })
 };
-// ------------------------------------Function Adds role to department_role table---------------------------------------------
+// // ------------------------------------Function Adds role to department_role table---------------------------------------------
 
 function addEmployee(){
     inquirer.prompt(newEmployee).then((answers) =>{
@@ -56,14 +57,17 @@ function addEmployee(){
        });
 })
 };
-// ------------------------------------Function Adds role to department_role table---------------------------------------------
+// // ------------------------------------Function Adds role to department_role table---------------------------------------------
 
 function changeEmployee(){
     // ^^^^ SELECT id, role_id FROM employee 
 };
-// ------------------------------------Function Adds role to department_role table---------------------------------------------
+// // ------------------------------------Function Adds role to department_role table---------------------------------------------
 
 function initialPrompt(){
+    figlet.text('Employee Manager',{
+        font: 'Big Money-nw'
+    }, (err,data)=>console.log(data))
     inquirer.prompt(getStarted).then((answers) =>{
         console.log(answers)
         switch(answers.toDO){ 
@@ -82,7 +86,7 @@ function initialPrompt(){
                 changeEmployee();
             break; 
             case 'View All Roles':
-                sqlLink.query(`SELECT * FROM department_role`, (err, result) =>{
+                sqlLink.query(`SELECT * FROM roles`, (err, result) =>{
                     if(err){
                         console.error(err);
                     }
