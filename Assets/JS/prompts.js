@@ -1,69 +1,69 @@
 const getStarted = [
     {
-        name: 'test',
-        message: 'text inquire 1'
-    },
-    {
-        name: 'op2',
-        message: 'text inquire 2'
-    },
-
-    {
-        name: 'test',
-        message: 'test inquire 1'
-    },
-    {
-        name: 'test',
-        message: 'test inquire 2'
-    }
-];
-const questions = [
-    {
-        name: 'title',
-        type: 'input',
-        message: 'What is the title of your project',
-    },
-    {
-        name: 'description',
-        type: 'input',
-        message: 'enter a brief description (more can be added later)',
-    },
-    {
-        name: 'Installation',
-        type: 'input',
-        message: 'Describe how to install the project',
-    },
-    {
-        name: 'usage',
-        type: 'input',
-        message: 'Enter a brief explanation of how to use the project',
-    },
-    {
-        name: 'ContributionGuidlines',
-        type: 'input',
-        message: 'Explain rules of use when adding to this project',
-    },
-    {
-        name: 'Test',
-        type: 'input',
-        message: 'Explain how a user could test this product',
-    },
-    {
-        name: 'license',
+        name: 'toDO',
         type: 'list',
-        message: 'choose a License',
-        choices: ['MIT', 'Artistic', 'Apache', 'The Unlicense', 'zLib License', 'Mozilla Public License 2.0', 'None'],
+        message: 'What would you like to do?',
+        choices: ['View All Employees','Add Employee', 'Update Employee Role', 'View all roles', 'Add role', 'View all departments', 'add department'],
+    },
+];
+const newDept = [
+    {
+        name: 'name',
+        type: 'input',
+        message: 'What is the name of the department?',
+    }
+];
+const newRole = [
+    {
+        name: 'name',
+        type: 'input',
+        message: 'What is the name of the role?',
     },
     {
-        name: 'gitHubUser',
-        type: 'input',
-        message: 'Enter your github username',
+        name: 'salary',
+        type: 'number',
+        message: 'What is the salary for the role?'
     },
     {
-        name: 'email',
+        name: 'parentDept',
+        type: 'list',
+        choices: getDepartments(),
+    }
+];
+const newEmployee = [
+    {
+        name: 'first_name',
         type: 'input',
-        message: 'Enter your email',
+        message: `What is the employee's first name?`,
+    },
+    {
+        name: 'last_name',
+        type: 'inpit',
+        message: `What is the employee's last name?`
+    },
+    {
+        name: 'empRole',
+        type: 'list',
+        choices: getRoles(),
+    },
+    {
+        name: 'empMan',
+        type: 'list',
+        choices: getManagers(),
+    }
+];
+const updateEmployee = [
+    {
+        name: 'who',
+        type: 'list',
+        message: getEmployees(),
+    },
+    {
+        name: 'newRole',
+        type: 'list',
+        message: getRoles(),
     }
 ];
 
-module.exports = {getStarted, questions};
+
+module.exports = {getStarted, newDept, newRole, newEmployee, updateEmployee};

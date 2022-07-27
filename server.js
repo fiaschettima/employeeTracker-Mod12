@@ -1,6 +1,6 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
-const prompts = require('./Assets/JS/prompts')
+const {getStarted, newDept, newRole, newEmployee, updateEmployee} = require('./Assets/JS/prompts')
 
 
 const sqlLink = mysql.createConnection({
@@ -11,8 +11,32 @@ const sqlLink = mysql.createConnection({
 },
 console.log(`Connected to ${sqlLink} Database`)
 );
+function getDepartments(){
+
+};
+function getRoles(){
+
+};
+function getManagers(){
+
+};
+function getEmployees(){
+
+};
+function newDepartment(){
+
+};
+function newRole(){
+
+};
+function newEmployee(){
+
+};
+function updateEmplyoee(){
+
+};
 function startPage(){
-    inquirer.prompt(questions.questions).then((answers) =>{
+    inquirer.prompt(getStarted).then((answers) =>{
         console.log(answers)
     })
 };
