@@ -3,7 +3,7 @@ const getStarted = [
         name: 'toDO',
         type: 'list',
         message: 'What would you like to do?',
-        choices: ['View All Employees','Add Employee', 'Update Employee Role', 'View all roles', 'Add role', 'View all departments', 'add department'],
+        choices: ['View All Employees','Add Employee', 'Update Employee Role', 'View All Roles', 'Add Role', 'View All Departments', 'Add department'],
     },
 ];
 const newDept = [

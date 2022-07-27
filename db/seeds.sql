@@ -15,7 +15,8 @@ VALUES ('Software Engineer', 120000, 7),
        ('office IT', 70000, 3),
        ('Marketing Specialist', 100000, 4),
        ('Account specialist', 90000, 5),
-       ('HR team' 85000, 6);
+       ('HR team', 85000, 6),
+       ('Manager', 100000, 1);
 
 INSERT INTO employee(first_name, last_name, role_id, manager_id)
 VALUES ('Sam', 'Riddles', 1, 1);
