@@ -26,7 +26,8 @@ const getStarted = [
             'View All Roles', 
             'Add Role', 
             'View All Departments', 
-            'Add department'
+            'Add department',
+            'Exit'
         ],
     },
 ];
@@ -51,7 +52,7 @@ const newRole = [
     {
         name: 'parentDept',
         type: 'list',
-        choices: getDepartments(),
+        choices: departmentsArray,
     }
 ];
 const newEmployee = [
@@ -68,12 +69,14 @@ const newEmployee = [
     {
         name: 'empRole',
         type: 'list',
-        choices: getRoles(),
+        message: 'What is the employees role',
+        choices: roleArray,
     },
     {
         name: 'empMan',
         type: 'list',
-        choices: ['None',getManagers()]
+        message: 'Who is this employees manager',
+        choices: emplyArray,
     }
 ];
 const updateEmployee = [
@@ -92,12 +95,15 @@ const updateEmployee = [
 ];
 // // ------------------------------------Function Adds department to  department table---------------------------------------------
 function newDepartment(){
+
     inquirer.prompt(newDept).then((answers) =>{
-        sqlLink.query(`INSERT INTO department VALUES ('${answers.name}')`, (err, result) => {
+        sqlLink.query(`INSERT INTO department (name) VALUES ('${answers.name}');`, (err, result) => {
             if(err){
                 console.error(err);
+                return
             }
-            console.log(`${answers.name} was added to the Departments Table\n`)
+            console.log(`${answers.name} was added to the Departments Table\n`);
+            basePrompt();
         })
     })
 };
@@ -105,7 +111,7 @@ function newDepartment(){
 function addRole(){
     inquirer.prompt(newRole).then((answers) => {
         console.log(answers);
-        sqlLink.query(`INSERT INTO roles VALUES('${answewrs.name}', '${answers.salary}', '${answers.parentDept}'`,  (err, result) =>{
+        sqlLink.query(`INSERT INTO roles (title, salary, department_id) VALUES('${answers.name}', '${answers.salary}', '${answers.parentDept}'`,  (err, result) =>{
             if(err){
                 console.error(err);
             }
@@ -117,7 +123,7 @@ function addRole(){
 function addEmployee(){
     inquirer.prompt(newEmployee).then((answers) =>{
         console.log(answers)
-    sqlLink.query(`INSERT INTO employee VALUES('${answewrs.first_name}', '${answers.last_name}', '${answers.empRole}', '${answers.empMan}')`,  (err, result) =>{
+    sqlLink.query(`INSERT INTO employee VALUES('${answers.first_name}', '${answers.last_name}', '${answers.empRole}', '${getManagersID(answers.empMan)}')`,  (err, result) =>{
         if(err){
             console.error(err);
         }
@@ -142,21 +148,37 @@ function getRoles(){
   // // ------------------------------------Function Adds role to department_role table---------------------------------------------
  
   function getEmployees(){
-    // var emplyArray =[];
       sqlLink.query(`SELECT first_name, last_name FROM employee`, (err, result) => {
         if(err){
             console.error(err)
         }
         result.forEach((employee) => {
-            emplyArray.push(employee.first_name);
+            emplyArray.push(employee.first_name + ' ' + employee.last_name);
         });
       })
       return emplyArray;
   };
 // // ------------------------------------Function Adds role to department_role table---------------------------------------------
     
-  function getManagers(){
-      // return a list of all manager names in [array, form]
+  function getManagersID(name){
+    sqlLink.query(`SELECT * FROM employee`, (err, result) => {
+        if(err){
+            console.error(err)
+        }
+        console.log(result)
+        result.forEach((employee) =>{
+            if(name === 'None'){
+                console.log(null)
+                return null
+            }
+            else if(employee.first_name === name){
+                console.log(employee.id )
+               return employee.id 
+            }
+        })
+        
+      })
+     
   };
 // // ------------------------------------Function Adds role to department_role table---------------------------------------------
 function changeEmployee(){
@@ -165,12 +187,22 @@ function changeEmployee(){
     }) 
 };
 function getDepartments(){
-
+    sqlLink.query(`SELECT name FROM department;`, (err, result) => {
+        if(err){
+            console.error(err)
+        }
+        result.forEach((department) => {
+          departmentsArray.push(department);
+      });
+      });
+      return departmentsArray;
 };
 
 function basePrompt(){
-emplyArray = getEmployees();
-
+    emplyArray = getEmployees();
+    roleArray = getRoles();
+    departmentsArray = getDepartments();
+// managerArr = getManagers();
     inquirer.prompt(getStarted).then((answers) =>{
        
         switch(answers.toDO){ 
@@ -219,7 +251,10 @@ emplyArray = getEmployees();
             break; 
 
             case 'Add department':
-                changeEmployee();
+                newDepartment();
+            break; 
+            case 'Exit':
+                sqlLink.end();
             break;   
         }
     })
