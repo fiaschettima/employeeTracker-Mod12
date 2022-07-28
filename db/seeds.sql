@@ -1,4 +1,4 @@
-INSERT INTO department (dep_name)
+INSERT INTO department (name)
 VALUES ('Managment'),
        ('Sales'),
        ('IT'),
@@ -7,7 +7,7 @@ VALUES ('Managment'),
        ('HR'),
        ('Developtment');
 
-INSERT INTO department_role (title, salary, department_id)
+INSERT INTO roles (title, salary, department_id)
 VALUES ('Software Engineer', 120000, 7),  
        ('Intern', 30000, 7),
        ('Project Manager', 130000, 1),
@@ -18,5 +18,6 @@ VALUES ('Software Engineer', 120000, 7),
        ('HR team', 85000, 6),
        ('Manager', 100000, 1);
 
-INSERT INTO employee(first_name, last_name, role_id, manager_id)
-VALUES ('Sam', 'Riddles', 1, 1);
+INSERT INTO employee(first_name, last_name, role_id)
+VALUES ('Sam', 'Riddles', 1);
+-- ^^^^how to add manager to this??
