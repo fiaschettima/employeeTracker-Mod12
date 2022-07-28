@@ -13,7 +13,9 @@ console.log('connected to movies_db')
 var roleArray=[];
 var emplyArray = ['None'];
 var departmentsArray= [];
-
+var manId ;
+var roleId ;
+var depId;
 const getStarted = [
     {
         name: 'toDO',
@@ -102,7 +104,7 @@ function newDepartment(){
                 console.error(err);
                 return
             }
-            console.log(`${answers.name} was added to the Departments Table\n`);
+            console.log(`Department Added\n`);
             basePrompt();
         })
     })
@@ -110,28 +112,72 @@ function newDepartment(){
 // // ------------------------------------Function Adds role to department_role table---------------------------------------------
 function addRole(){
     inquirer.prompt(newRole).then((answers) => {
-        console.log(answers);
-        sqlLink.query(`INSERT INTO roles (title, salary, department_id) VALUES('${answers.name}', '${answers.salary}', '${answers.parentDept}'`,  (err, result) =>{
+        sqlLink.query(`SELECT * FROM department WHERE name =${answers.parentDept};`, (err, result) => {
             if(err){
-                console.error(err);
+                console.error(err)
             }
-            console.log(`Role Added ${result}`);
-           });
+            depId = result[0].id
+
+            sqlLink.query(`INSERT INTO roles (title, salary, department_id) VALUES('${answers.name}', '${answers.salary}', '${depId}'`,  (err, result) =>{
+                if(err){
+                    console.error(err);
+                }
+                console.log(`Role Added`);
+            });
+        })
+       
     })
 };
 // // ------------------------------------Function Adds role to department_role table---------------------------------------------
+
 function addEmployee(){
+
     inquirer.prompt(newEmployee).then((answers) =>{
-        console.log(answers)
-    sqlLink.query(`INSERT INTO employee VALUES('${answers.first_name}', '${answers.last_name}', '${answers.empRole}', '${getManagersID(answers.empMan)}')`,  (err, result) =>{
-        if(err){
-            console.error(err);
+    if(answers.empMan !=='None'){
+        sqlLink.query(`SELECT * FROM employee WHERE first_name = '${answers.empMan.split(' ')[0]}' AND last_name = '${answers.empMan.split(' ')[1]}';`,
+        (err,result) =>{
+            if(err){
+                console.error(err);
+            }
+            manId = result[0].id
+            sqlLink.query(`SELECT id FROM roles WHERE title = '${answers.empRole}';`,
+                (err,result) =>{
+                if(err){
+                    console.error(err);
+                }
+            roleId = result[0].id
+
+            sqlLink.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES('${answers.first_name}', '${answers.last_name}', '${roleId}', '${manId}')`,  (err, result) =>{
+                if(err){
+                    console.error(err);
+                }
+                console.log(`Employee Added`)
+                basePrompt();
+               });
+            })
+        })}
+        else{
+            noManager(answers)
         }
-        console.log(`Employee Added ${result}`)
-        basePrompt();
-       });
-})
+    })
 };
+function noManager(answers){
+    sqlLink.query(`SELECT id FROM roles WHERE title = '${answers.empRole}';`,
+                (err,result) =>{
+                if(err){
+                    console.error(err);
+                }
+            roleId = result[0].id
+
+            sqlLink.query(`INSERT INTO employee (first_name, last_name, role_id) VALUES('${answers.first_name}', '${answers.last_name}', '${roleId}');`,  (err, result) =>{
+                if(err){
+                    console.error(err);
+                }
+                console.log(`Employee Added`)
+                basePrompt();
+               });
+            
+})};
 // // ------------------------------------Function Adds role to department_role table---------------------------------------------
 function getRoles(){
     sqlLink.query(`SELECT title FROM roles;`, (err, result) => {
@@ -158,28 +204,7 @@ function getRoles(){
       })
       return emplyArray;
   };
-// // ------------------------------------Function Adds role to department_role table---------------------------------------------
-    
-  function getManagersID(name){
-    sqlLink.query(`SELECT * FROM employee`, (err, result) => {
-        if(err){
-            console.error(err)
-        }
-        console.log(result)
-        result.forEach((employee) =>{
-            if(name === 'None'){
-                console.log(null)
-                return null
-            }
-            else if(employee.first_name === name){
-                console.log(employee.id )
-               return employee.id 
-            }
-        })
-        
-      })
-     
-  };
+
 // // ------------------------------------Function Adds role to department_role table---------------------------------------------
 function changeEmployee(){
     inquirer.prompt(updateEmployee).then((answers) => {
@@ -207,7 +232,7 @@ function basePrompt(){
        
         switch(answers.toDO){ 
             case 'View All Employees':
-               sqlLink.query(`SELECT * FROM employee`, (err, result) =>{
+               sqlLink.query(`SELECT * FROM employee;`, (err, result) =>{
                 if(err){
                     console.error(err);
                 }
