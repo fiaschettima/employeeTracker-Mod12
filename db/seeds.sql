@@ -19,5 +19,8 @@ VALUES ('Software Engineer', 120000, 7),
        ('Manager', 100000, 1);
 
 INSERT INTO employee(first_name, last_name, role_id)
-VALUES ('Sam', 'Riddles', 1);
+VALUES ('Sam', 'Riddles', 1),
+       ('lll', 'gg', 1),
+       ('oo', 'y', 1),
+       ('g', 'q', 1);
 -- ^^^^how to add manager to this??
