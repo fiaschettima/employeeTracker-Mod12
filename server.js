@@ -1,12 +1,11 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const figlet = require('figlet');
-
-// figlet.text('\nEmployee\n Manager\n',{
-//     font: 'Big Money-nw'
-// }, (err,data)=>
-// console.log(data)
-// );
+const cTable = require('console.table')
+figlet.text('\nEmployee\n Manager\n',{font: 'Big Money-nw'}, (err,data)=>{
+    console.log(data)
+    basePrompt();
+});
 const sqlLink = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -117,17 +116,18 @@ function newDepartment(){
 // // ------------------------------------Function Adds role to department_role table---------------------------------------------
 function addRole(){
     inquirer.prompt(newRole).then((answers) => {
-        sqlLink.query(`SELECT * FROM department WHERE name =${answers.parentDept};`, (err, result) => {
+        sqlLink.query(`SELECT * FROM department WHERE name ='${answers.parentDept}';`, (err, result) => {
             if(err){
                 console.error(err)
             }
             depId = result[0].id
 
-            sqlLink.query(`INSERT INTO roles (title, salary, department_id) VALUES('${answers.name}', '${answers.salary}', '${depId}'`,  (err, result) =>{
+            sqlLink.query(`INSERT INTO roles (title, salary, department_id) VALUES('${answers.name}', ${answers.salary}, ${depId} )`,  (err, result) =>{
                 if(err){
                     console.error(err);
                 }
                 console.log(`Role Added`);
+                basePrompt();
             });
         })
        
@@ -191,7 +191,7 @@ function getRoles(){
       }
       result.forEach((role) => {
         roleArray.push(role.title);
-    });
+        });
     });
     return roleArray;
   
@@ -219,11 +219,12 @@ function changeEmployee(){
             }
             console.log(result)
             roleId = result[0].id
-            sqlLink.query(`UPDATE employee SET role_id = ${roleId} WHERE name = ${answers.who}`, (err,result) => {
+            sqlLink.query(`UPDATE employee SET role_id = ${roleId} WHERE first_name = '${answers.who.split(' ')[0]}' AND last_name = '${answers.who.split(' ')[1]}';`, (err,result) => {
                 if(err){
                     console.error(err)
                 }
                 console.log(`${answers.who} was re-assigned to ${answers.newRole}`)
+                basePrompt()
             })
         })
        
@@ -240,7 +241,9 @@ function getDepartments(){
       });
       return departmentsArray;
 };
-
+function totalBudgetByDept(){
+    sqlLink.query(`SELECT SUM(salary) FROM `)
+}
 function basePrompt(){
     emplyArray = getEmployees();
     roleArray = getRoles();
@@ -302,7 +305,7 @@ function basePrompt(){
         }
     })
 };
-basePrompt();
+
    
 
 
