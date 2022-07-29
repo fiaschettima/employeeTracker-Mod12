@@ -1,21 +1,79 @@
-# employeeTracker-Mod12
+# Employee Manager
 
-GIVEN a command-line application that accepts user input
-WHEN I start the application
-THEN I am presented with the following options: view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
-WHEN I choose to view all departments
-THEN I am presented with a formatted table showing department names and department ids
-WHEN I choose to view all roles
-THEN I am presented with the job title, role id, the department that role belongs to, and the salary for that role
-WHEN I choose to view all employees
-THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
-WHEN I choose to add a department
-THEN I am prompted to enter the name of the department and that department is added to the database
-WHEN I choose to add a role
-THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
-WHEN I choose to add an employee
-THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
-WHEN I choose to update an employee role
-THEN I am prompted to select an employee to update and their new role and this information is updated in the database
+This project allows the user to create a company database and save departments roles and employee infromation. Each role you create will be saved to the database and hold information such as title, salary, and the Id from its parent department. As an examlpe in the seeded database here a Software Engineer belongs to the Developtment department. Then for each role there is the relationship to roles. Each employee is linked to a role and potentially a manager.<br>
 
-https://github.com/patorjk/figlet.js----------------------- big text words
+![StartUp Page](./Assets/images/startUpImg.png)
+---
+
+## Demo
+
+Here is a short demonstration of the apps functionality from start to finish:
+
+![StartUp Page](./Assets/images/demoGif.gif)
+
+---
+
+## Installation
+
+To install the project in terminal run this command:
+
+```bash
+    git clone git@github.com:fiaschettima/employeeTracker-Mod12.git
+
+```
+The files will then be downloaded to the directory you ran the command in, Next run the following:
+```bash
+    cd employeeTracker-Mod12.git
+    npm i
+```
+These commands will move you into the file, then install the npm packages the app requires for its functionality.
+    
+## Usage/Examples
+
+To use the application 
+```bash
+    node server.js
+```
+This will Initialize the application meaning begin the prompts to view employees, add,change ...
+When finished you can choose the final option in the Main list of "Exit" or press CTRL C.
+
+---
+
+## Code Snippets
+
+The displayed function is intended to add an employee with manager value as null if none is given. This is done because in the schema the default value is set to null if no value is given.
+
+![No Manager code Snippet](./Assets/Images/codeSnip.png)
+
+---
+
+## Tech Stack
+
+**Client:** 
+
+**Server:** Node, Express, Inquirer, MySQL, figlet
+
+---
+
+## Lessons Learned
+
+This project provided the oppurtunity to gain practive and understanding of base SQL.
+
+---
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+---
+
+## Badges
+
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
+
+---
+
+## Authors
+
+- [@Matt Fiaschetti](https://github.com/fiaschettima)
+

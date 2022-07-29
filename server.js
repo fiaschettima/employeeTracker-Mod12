@@ -12,7 +12,6 @@ const sqlLink = mysql.createConnection({
     password: 'password',
     database: 'company_db'
 },
-console.log('connected to movies_db')
 );
 var roleArray=[];
 var emplyArray = ['None'];
@@ -217,7 +216,6 @@ function changeEmployee(){
             if(err){
                 console.error(err)
             }
-            console.log(result)
             roleId = result[0].id
             sqlLink.query(`UPDATE employee SET role_id = ${roleId} WHERE first_name = '${answers.who.split(' ')[0]}' AND last_name = '${answers.who.split(' ')[1]}';`, (err,result) => {
                 if(err){
@@ -242,7 +240,7 @@ function getDepartments(){
       return departmentsArray;
 };
 function totalBudgetByDept(){
-    sqlLink.query(`SELECT SUM(salary) FROM `)
+    sqlLink.query(`SELECT * FROM `)
 }
 function basePrompt(){
     emplyArray = getEmployees();
@@ -252,14 +250,11 @@ function basePrompt(){
        
         switch(answers.toDO){ 
             case 'View All Employees':
-                // `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, 
-                // role.salary, CONCAT(m.first_name, " ", m.last_name) as m 
-                // FROM employee INNER JOIN role ON employee.role_id=role.id INNER JOIN department
-                //  ON department.id=role.department_id LEFT JOIN employee m on m.id=employee.manager_id`,
-
                sqlLink.query(`SELECT employee.id, employee.first_name, employee.last_name, roles.title, department.name AS Department, 
-               roles.salary, CONCAT(Manager.first_name, ' ', Manager.last_name) as Manager FROM employee INNER JOIN roles ON employee.role_id = roles.id
-               INNER JOIN department ON department.id=roles.department_id LEFT JOIN employee Manager on Manager.id=employee.manager_id ;`, (err, result) =>{
+               roles.salary, CONCAT(Manager.first_name, ' ', Manager.last_name) as Manager FROM employee INNER JOIN roles 
+               ON employee.role_id = roles.id
+               INNER JOIN department ON department.id=roles.department_id LEFT JOIN employee Manager
+                on Manager.id=employee.manager_id ;`, (err, result) =>{
                 if(err){
                     console.error(err);
                 }
