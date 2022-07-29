@@ -54,11 +54,11 @@ When finished you can choose the final option in the Main list of "Exit" or pres
 
 The displayed function is intended to add an employee with manager value as null if none is given. This is done because in the schema the default value is set to null if no value is given.
 
-![No Manager code Snippet](./Assets/Images/codeSnip.png)
+![No Manager code Snippet](./Assets/images/codeSnip.png)
 
 The function below gets the total budget of each department by grouping each department by name and summing up the role salaries contained insdie.
 
-![Budget Snip](./Assets/Images/codeSnipBudget.png)
+![Budget Snip](./Assets/images/codeSnipBudget.png)
 
 ---
 
