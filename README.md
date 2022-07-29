@@ -4,6 +4,8 @@ This project allows the user to create a company database and save departments r
 
 [Link to Video Demo on Google Drive](https://drive.google.com/file/d/19dulgmelrrT7aIYMSXpdNOog8aknaSkH/view)
 
+![Bonus Budget](./Assets/images/)
+
 ---
 
 ## Demo
@@ -51,6 +53,10 @@ When finished you can choose the final option in the Main list of "Exit" or pres
 ## Code Snippets
 
 The displayed function is intended to add an employee with manager value as null if none is given. This is done because in the schema the default value is set to null if no value is given.
+
+![No Manager code Snippet](./Assets/Images/codeSnip.png)
+
+The function below gets the total budget of each department by grouping each department by name and summing up the role salaries contained insdie.
 
 ![No Manager code Snippet](./Assets/Images/codeSnip.png)
 

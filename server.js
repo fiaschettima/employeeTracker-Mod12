@@ -1,7 +1,8 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const figlet = require('figlet');
-const cTable = require('console.table')
+const cTable = require('console.table');
+
 figlet.text('\nEmployee\n Manager\n',{font: 'Big Money-nw'}, (err,data)=>{
     console.log(data)
     basePrompt();
@@ -32,6 +33,7 @@ const getStarted = [
             'Add Role', 
             'View All Departments', 
             'Add department',
+            'Total Budget',
             'Exit'
         ],
     },
@@ -239,9 +241,19 @@ function getDepartments(){
       });
       return departmentsArray;
 };
-function totalBudgetByDept(){
-    sqlLink.query(`SELECT * FROM `)
+// -------------
+function totalBudget(){
+    sqlLink.query(`SELECT department.name AS Department, SUM(roles.salary) AS Total FROM roles INNER JOIN department ON department_id = department.id GROUP BY department.name`,
+        (err,result) => {
+            if(err){
+                console.error(err)
+            }
+            console.table(result);
+            basePrompt();
+        })
 }
+
+// ----------------------- 
 function basePrompt(){
     emplyArray = getEmployees();
     roleArray = getRoles();
@@ -260,22 +272,19 @@ function basePrompt(){
                 }
                 console.table(result);
                 basePrompt();
-               })
-               
+               })    
             break;
-
             case 'Add Employee':
                addEmployee();
-            
             break;
 
             case 'Update Employee Role':
-                // fix
                 changeEmployee();
             break; 
 
             case 'View All Roles':
-                sqlLink.query(`SELECT * FROM roles`, (err, result) =>{
+                sqlLink.query(`SELECT roles.id, roles.title, department.name AS Department, roles.salary FROM roles INNER JOIN department 
+                ON roles.department_id = department.id`, (err, result) =>{
                     if(err){
                         console.error(err);
                     }
@@ -300,6 +309,9 @@ function basePrompt(){
 
             case 'Add department':
                 newDepartment();
+            break; 
+            case 'Total Budget':
+                totalBudget();
             break; 
             case 'Exit':
                 sqlLink.end();
