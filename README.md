@@ -27,7 +27,15 @@ The files will then be downloaded to the directory you ran the command in, Next 
     npm i
 ```
 These commands will move you into the file, then install the npm packages the app requires for its functionality.
-    
+ Then you will need to create the initial database and seed it with starter data by doing the following:
+ Navigate into Schema and copy all cody in schema, after pasted and rand also copy everything in seeds.sql
+ ```bash
+   mysql -u root -p
+   <paste the schema here>
+   <paste seeds.sql here
+```   
+Now the initial database is created and the application will function as intended.
+
 ## Usage/Examples
 
 To use the application 
