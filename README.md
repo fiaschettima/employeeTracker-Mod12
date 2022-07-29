@@ -2,7 +2,8 @@
 
 This project allows the user to create a company database and save departments roles and employee infromation. Each role you create will be saved to the database and hold information such as title, salary, and the Id from its parent department. As an examlpe in the seeded database here a Software Engineer belongs to the Developtment department. Then for each role there is the relationship to roles. Each employee is linked to a role and potentially a manager.<br>
 
-![StartUp Page](./Assets/images/startUpImg.png)
+[Link to Video Demo on Google Drive](https://drive.google.com/file/d/19dulgmelrrT7aIYMSXpdNOog8aknaSkH/view)
+
 ---
 
 ## Demo
