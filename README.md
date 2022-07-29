@@ -58,7 +58,7 @@ The displayed function is intended to add an employee with manager value as null
 
 The function below gets the total budget of each department by grouping each department by name and summing up the role salaries contained insdie.
 
-![No Manager code Snippet](./Assets/Images/codeSnip.png)
+![Budget Snip](./Assets/Images/codeSnipBudget.png)
 
 ---
 
