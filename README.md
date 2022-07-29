@@ -4,7 +4,7 @@ This project allows the user to create a company database and save departments r
 
 [Link to Video Demo on Google Drive](https://drive.google.com/file/d/19dulgmelrrT7aIYMSXpdNOog8aknaSkH/view)
 
-![Bonus Budget](./Assets/images/)
+![Bonus Budget](./Assets/images/codeSnipBudgetExample.png)
 
 ---
 
