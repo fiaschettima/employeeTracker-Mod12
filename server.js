@@ -2,6 +2,11 @@ const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const figlet = require('figlet');
 
+// figlet.text('\nEmployee\n Manager\n',{
+//     font: 'Big Money-nw'
+// }, (err,data)=>
+// console.log(data)
+// );
 const sqlLink = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -208,7 +213,20 @@ function getRoles(){
 // // ------------------------------------Function Adds role to department_role table---------------------------------------------
 function changeEmployee(){
     inquirer.prompt(updateEmployee).then((answers) => {
-        console.log(answers);
+        sqlLink.query(`SELECT * FROM roles WHERE title = '${answers.newRole}'`, (err, result) => {
+            if(err){
+                console.error(err)
+            }
+            console.log(result)
+            roleId = result[0].id
+            sqlLink.query(`UPDATE employee SET role_id = ${roleId} WHERE name = ${answers.who}`, (err,result) => {
+                if(err){
+                    console.error(err)
+                }
+                console.log(`${answers.who} was re-assigned to ${answers.newRole}`)
+            })
+        })
+       
     }) 
 };
 function getDepartments(){
@@ -227,7 +245,6 @@ function basePrompt(){
     emplyArray = getEmployees();
     roleArray = getRoles();
     departmentsArray = getDepartments();
-// managerArr = getManagers();
     inquirer.prompt(getStarted).then((answers) =>{
        
         switch(answers.toDO){ 
@@ -248,6 +265,7 @@ function basePrompt(){
             break;
 
             case 'Update Employee Role':
+                // fix
                 changeEmployee();
             break; 
 
@@ -289,9 +307,3 @@ basePrompt();
 
 
     
-
-// figlet.text('\nEmployee\n Manager\n',{
-    //     font: 'Big Money-nw'
-    // }, (err,data)=>
-    // console.log(data)
-    // );
